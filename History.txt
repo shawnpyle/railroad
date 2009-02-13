@@ -1,3 +1,7 @@
+=== 0.7.1 / 2009-02-13
+
+* Housekeeping
+
 === 0.7.0 / 2009-02-13
 
 * 2 major enhancements
