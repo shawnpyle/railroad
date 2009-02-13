@@ -1,15 +1,32 @@
 namespace :doc do
   namespace :diagram do
-    ADDITIONAL_OPTS = "-v -j --hide-magic"
-    RAILROAD = "./vendor/plugins/railroad/bin/railroad"
     desc "Draw model diagram"
     task :models do
-      sh "#{RAILROAD} -i -m -M #{ADDITIONAL_OPTS} | dot -Tsvg | sed 's/font-size:12.00/font-size:11.00/g' > doc/models.svg"
+      classmap = {
+#        'app/models/model_with_nasty_name' => 'ModelWithNastyNAME',
+      }.to_a.join(',')
+      exclude =
+        [
+#         'app/models/model_to_exclude.rb',
+        ].join(',')
+      opts =
+        [
+         '--models',
+         '--inheritance',
+         '--label',
+         '--all',
+         '--modules',
+#         '--libraries',
+#         '--verbose',
+        ].join(' ')
+      FileUtils.mkdir('doc/app') unless File.exist?('doc/app')
+      sh "railroad #{opts} --class-map=#{classmap} --exclude=#{exclude} | dot -Tsvg | sed 's/font-size:14.00/font-size:11px/g' > doc/app/models.svg"
     end
 
     desc "Draw controller diagram"
     task :controllers do
-      sh "#{RAILROAD} -i -C | neato -Tsvg | sed 's/font-size:12.00/font-size:11.00/g' > doc/controllers.svg"
+      FileUtils.mkdir('doc/app') unless File.exist?('doc/app')
+      sh "railroad -i -C | neato -Tsvg | sed 's/font-size:14.00/font-size:11px/g' > doc/app/controllers.svg"
     end
   end
 

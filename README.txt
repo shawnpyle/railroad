@@ -1,6 +1,6 @@
-= RailRoad 
+= RailRoad
 
-RailRoad generates models and controllers diagrams in DOT language for a 
+RailRoad generates models and controllers diagrams in DOT language for a
 Rails application.
 
 
@@ -12,13 +12,15 @@ graphic. Model diagrams are intended to be processed using dot and
 controller diagrams are best processed using neato.
 
     railroad [options] command
- 
+
 == Options
 
 Common options:
     -b, --brief                      Generate compact diagram
                                        (no attributes nor methods)
     -e, --exclude file1[,fileN]      Exclude given files
+    -c, --class-map file1,MyClass1[,fileN,MyClassN]
+                                     Map files to classes they contain
     -i, --inheritance                Include inheritance relations
     -l, --label                      Add a label with diagram information
                                        (type, date, migration, version)
@@ -34,6 +36,7 @@ Models diagram options:
     -j, --join                       Concentrate edges
     -m, --modules                    Include modules
     -p, --plugins-models             Include plugins models
+    -y, --libraries                  Include application library
     -t, --transitive                 Include transitive associations
                                      (through inheritance)
 
@@ -55,9 +58,9 @@ Other options:
 
 == Examples
 
-    railroad -o models.dot -M 
+    railroad -o models.dot -M
       Produces a models diagram to the file 'models.dot'
-    railroad -a -i -o full_models.dot -M 
+    railroad -a -i -o full_models.dot -M
       Models diagram with all classes showing inheritance relations
     railroad -M | dot -Tsvg > models.svg
       Model diagram in SVG format
@@ -88,10 +91,11 @@ the following:
 Important: There is a bug in Graphviz tools when generating SVG files that
 cause a text overflow. You can solve this problem editing (with a text
 editor, not a graphical SVG editor) the file and replacing around line 12
-"font-size:14.00;" by "font-size:11.00;", or by issuing the following command 
+"font-size:14.00;" by "font-size:11.00;", or by issuing the following command
 (see "man sed"):
 
     sed -i 's/font-size:14.00/font-size:11.00/g' file.svg
+    sed -i 's/font-size:14.00/font-size:11px/g' file.svg  # alternative
 
 Note: For viewing and editing SVG there is an excellent opensource tool
 called Inkscape (similar to Adobe Illustrator. For DOT processing you can
@@ -99,25 +103,7 @@ also use Omnigraffle (on Mac OS X).
 
 = RailRoad as a rake task
 
-(Thanks to Thomas Ritz, http://www.galaxy-ritz.de ,for the code.)
-
-In your Rails application, put the following rake tasks into 'lib/task/diagrams.rake':
-
-  namespace :doc do
-    namespace :diagram do
-      task :models do
-        sh "railroad -i -l -a -m -M | dot -Tsvg | sed 's/font-size:14.00/font-size:11.00/g' > doc/models.svg"
-      end
-  
-      task :controllers do
-        sh "railroad -i -l -C | neato -Tsvg | sed 's/font-size:14.00/font-size:11.00/g' > doc/controllers.svg"
-      end
-    end
-  
-    task :diagrams => %w(diagram:models diagram:controllers)
-  end
-  
-Then, 'rake doc:diagrams' produces 'doc/models.svg' and 'doc/controllers.svg'.
+See tasks/diagrams.rake
 
 = Requirements
 
@@ -135,11 +121,18 @@ http://railroad.rubyforge.org
 = License
 
 RailRoad is distributed  under the terms of the GNU General Public License
-as published by the Free Software Foundation; either version 2 of the 
+as published by the Free Software Foundation; either version 2 of the
 License, or (at your option) any later version.
 
 = Author
 
-Javier Smaldone 
+Javier Smaldone
 (javier -at- smaldone -dot- com -dot- ar, http://blog.smaldone.com.ar )
 
+== Contributors
+
+Thomas Ritz         http://www.galaxy-ritz.de
+Tien Dung           http://github.com/tiendung
+Factory Design Labs http://github.com/factorylabs
+Mike Mondragon      http://github.com/monde
+Tero Tilus          http://github.com/terotil
