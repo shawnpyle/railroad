@@ -1,11 +1,11 @@
 Gem::Specification.new do |s|
   s.name = %q{railroad}
-  s.version = "0.7.1.1"
+  s.version = "0.7.2"
 
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Javier Smaldone", "Thomas Ritz", "Tien Dung", "Factory Design Labs", "Mike Mondragon", "Tero Tilus"]
-  s.date = %q{2009-02-13}
+  s.authors = ["Javier Smaldone", "Thomas Ritz", "Tien Dung", "Factory Design Labs", "Mike Mondragon", "Tero Tilus", "David Dollar"]
+  s.date = %q{2009-02-18}
   s.default_executable = %q{railroad}
   s.description = %q{}
   s.email = %q{javier@smaldone.com.ar}
