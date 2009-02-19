@@ -62,7 +62,6 @@ class ModelsDiagram < AppDiagram
       disable_stdout
       files = Dir.glob("app/models/**/*.rb")
       files += Dir.glob("vendor/plugins/**/app/models/*.rb") if @options.plugins_models
-      files += ["lib/search.rb"]
       files -= @options.exclude
       files.each do |m|
         require m
