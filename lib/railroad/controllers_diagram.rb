@@ -6,7 +6,7 @@
 
 # RailRoad controllers diagram
 class ControllersDiagram < AppDiagram
- 
+
   def initialize(options)
     #options.exclude.map! {|e| "app/controllers/" + e}
     super options
@@ -18,13 +18,10 @@ class ControllersDiagram < AppDiagram
     STDERR.print "Generating controllers diagram\n" if @options.verbose
 
     files = Dir.glob("app/controllers/**/*_controller.rb") - @options.exclude
-    files << 'app/controllers/application.rb'
     files.each do |f|
       class_name = extract_class_name('app/controllers/', f)
-      # ApplicationController's file is 'application.rb'
-      class_name += 'Controller' if class_name == 'Application'
       process_class class_name.constantize
-    end 
+    end
   end # generate
 
   private
@@ -34,7 +31,7 @@ class ControllersDiagram < AppDiagram
     begin
       disable_stdout
       # ApplicationController must be loaded first
-      require "app/controllers/application.rb" 
+      require "app/controllers/application_controller.rb"
       files = Dir.glob("app/controllers/**/*_controller.rb") - @options.exclude
       files.each {|c| require c }
       enable_stdout
@@ -52,19 +49,19 @@ class ControllersDiagram < AppDiagram
 
     if @options.brief
       @graph.add_node ['controller-brief', current_class.name]
-    elsif current_class.is_a? Class 
+    elsif current_class.is_a? Class
       # Collect controller's methods
-      node_attribs = {:public    => [], 
-                      :protected => [], 
+      node_attribs = {:public    => [],
+                      :protected => [],
                       :private   => []}
       current_class.public_instance_methods(false).sort.each { |m|
-        node_attribs[:public] << m
+        process_method(node_attribs[:public], m)
       } unless @options.hide_public
       current_class.protected_instance_methods(false).sort.each { |m|
-        node_attribs[:protected] << m
+        process_method(node_attribs[:protected], m)
       } unless @options.hide_protected
       current_class.private_instance_methods(false).sort.each { |m|
-        node_attribs[:private] << m 
+        process_method(node_attribs[:private], m)
       } unless @options.hide_private
       @graph.add_node ['controller', current_class.name, node_attribs]
     elsif @options.modules && current_class.is_a?(Module)
@@ -72,10 +69,16 @@ class ControllersDiagram < AppDiagram
     end
 
     # Generate the inheritance edge (only for ApplicationControllers)
-    if @options.inheritance && 
+    if @options.inheritance &&
        (ApplicationController.subclasses.include? current_class.name)
       @graph.add_edge ['is-a', current_class.superclass.name, current_class.name]
     end
   end # process_class
+
+  # Process a method
+  def process_method(attribs, method)
+    return if @options.hide_underscore && method[0..0] == '_'
+    attribs << method
+  end
 
 end # class ControllersDiagram

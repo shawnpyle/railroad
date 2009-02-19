@@ -25,6 +25,7 @@ class OptionsStruct < OpenStruct
                      :hide_public => false,
                      :hide_protected => false,
                      :hide_private => false,
+                     :hide_underscore => false,
                      :plugins_models => false,
                      :libraries => false,
                      :root => '',
@@ -109,6 +110,9 @@ class OptionsStruct < OpenStruct
       end
       opts.on("--hide-private", "Hide private methods") do |h|
         self.hide_private = h
+      end
+      opts.on("--hide-underscore", "Hide methods that begin with an underscore") do |h|
+        self.hide_underscore = h
       end
       opts.separator ""
       opts.separator "Other options:"
