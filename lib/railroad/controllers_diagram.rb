@@ -30,10 +30,8 @@ class ControllersDiagram < AppDiagram
   def load_classes
     begin
       disable_stdout
-      # ApplicationController must be loaded first
-      require "app/controllers/application_controller.rb"
       files = Dir.glob("app/controllers/**/*_controller.rb") - @options.exclude
-      files.each {|c| require c }
+      files.each {|file| get_controller_class(file) }
       enable_stdout
     rescue LoadError
       enable_stdout
@@ -41,6 +39,22 @@ class ControllersDiagram < AppDiagram
       raise
     end
   end # load_classes
+
+  # This method is taken from the annotate models gem
+  # http://github.com/ctran/annotate_models/tree/master
+  #
+  # Retrieve the classes belonging to the controller names we're asked to process
+  # Check for namespaced controllers in subdirectories as well as controllers
+  # in subdirectories without namespacing.
+  def get_controller_class(file)
+    model = file.sub(/^.*app\/controllers\//, '').sub(/\.rb$/, '').camelize
+    parts = model.split('::')
+    begin
+      parts.inject(Object) {|klass, part| klass.const_get(part) }
+    rescue LoadError
+      Object.const_get(parts.last)
+    end
+  end
 
   # Proccess a controller class
   def process_class(current_class)
