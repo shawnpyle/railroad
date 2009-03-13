@@ -1,24 +1,23 @@
 Gem::Specification.new do |s|
-  s.name = %q{railroad}
-  s.version = "0.7.3"
-
+  s.name = "railroad"
+  s.version = "0.7.4"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Javier Smaldone", "Thomas Ritz", "Tien Dung", "Factory Design Labs", "Mike Mondragon", "Tero Tilus", "David Dollar"]
-  s.date = %q{2009-02-18}
-  s.default_executable = %q{railroad}
-  s.description = %q{}
-  s.email = %q{javier@smaldone.com.ar}
+  s.authors = ["Javier Smaldone", "Thomas Ritz", "Tien Dung", "Factory Design Labs", "Mike Mondragon", "Tero Tilus", "David Dollar", "Bruno Michel"]
+  s.date = "2009-03-13"
+  s.default_executable = "railroad"
+  s.description = "RailRoad is a class diagrams generator for Ruby on Rails applications."
+  s.email = "javier@smaldone.com.ar"
   s.executables = ["railroad"]
   s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt"]
   s.files = ["COPYING", "ChangeLog", "History.txt", "Manifest.txt", "README.txt", "Rakefile", "bin/railroad", "init.rb", "lib/railroad.rb", "lib/railroad/aasm_diagram.rb", "lib/railroad/app_diagram.rb", "lib/railroad/controllers_diagram.rb", "lib/railroad/diagram_graph.rb", "lib/railroad/models_diagram.rb", "lib/railroad/options_struct.rb", "tasks/diagrams.rake"]
   s.has_rdoc = true
-  s.homepage = %q{http://railroad.rubyforge.org}
+  s.homepage = "http://railroad.rubyforge.org"
   s.rdoc_options = ["--main", "README.txt"]
   s.require_paths = ["lib"]
-  s.rubyforge_project = %q{railroad}
-  s.rubygems_version = %q{1.2.0}
-  s.summary = %q{A DOT diagram generator for Ruby on Rail applications}
+  s.rubyforge_project = "railroad"
+  s.rubygems_version = "1.2.0"
+  s.summary = "A DOT diagram generator for Ruby on Rail applications"
 
   if s.respond_to? :specification_version then
     current_version = Gem::Specification::CURRENT_SPECIFICATION_VERSION

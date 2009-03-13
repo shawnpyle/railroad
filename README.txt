@@ -136,3 +136,4 @@ Tien Dung           http://github.com/tiendung
 Factory Design Labs http://github.com/factorylabs
 Mike Mondragon      http://github.com/monde
 Tero Tilus          http://github.com/terotil
+Bruno Michel        http://github.com/nono

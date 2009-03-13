@@ -28,7 +28,7 @@ class AasmDiagram < AppDiagram
     end
   end
   
-  private
+private
   
   # Load model classes
   def load_classes
@@ -37,7 +37,7 @@ class AasmDiagram < AppDiagram
       files = Dir.glob("app/models/**/*.rb")
       files += Dir.glob("vendor/plugins/**/app/models/*.rb") if @options.plugins_models
       files -= @options.exclude                  
-      files.each {|m| require m }
+      files.each {|file| get_model_class(file) }
       enable_stdout
     rescue LoadError
       enable_stdout
@@ -45,6 +45,22 @@ class AasmDiagram < AppDiagram
       raise
     end
   end  # load_classes
+
+  # This method is taken from the annotate models gem
+  # http://github.com/ctran/annotate_models/tree/master
+  #
+  # Retrieve the classes belonging to the model names we're asked to process
+  # Check for namespaced models in subdirectories as well as models
+  # in subdirectories without namespacing.
+  def get_model_class(file)
+    model = file.sub(/^.*app\/models\//, '').sub(/\.rb$/, '').camelize
+    parts = model.split('::')
+    begin
+      parts.inject(Object) {|klass, part| klass.const_get(part) }
+    rescue LoadError
+      Object.const_get(parts.last)
+    end
+  end
 
   # Process a model class
   def process_class(current_class)
