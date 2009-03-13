@@ -66,21 +66,36 @@ private
   def process_class(current_class)
     
     STDERR.print "\tProcessing #{current_class}\n" if @options.verbose
-    
+
+    states = nil
+    if current_class.respond_to? 'states'
+      states  = current_class.states
+      initial = current_class.initial_state
+      events  = current_class.read_inheritable_attribute(:transition_table)
+    elsif current_class.respond_to? 'aasm_states'
+      states  = current_class.aasm_states.map { |s| s.name }
+      initial = current_class.aasm_initial_state
+      events  = current_class.aasm_events
+    end
+
     # Only interested in acts_as_state_machine models.
-    return unless current_class.respond_to?'states'
-    
+    return if states.nil? || states.empty?
+
     node_attribs = []
     node_type = 'aasm'
-    
-    current_class.states.each do |state_name|
-      state = current_class.read_inheritable_attribute(:states)[state_name]
-      node_shape = (current_class.initial_state === state_name) ? ", peripheries = 2" : ""
+
+    states.each do |state_name|
+      node_shape = (initial === state_name) ? ", peripheries = 2" : ""
       node_attribs << "#{current_class.name.downcase}_#{state_name} [label=#{state_name} #{node_shape}];"
     end
     @graph.add_node [node_type, current_class.name, node_attribs]
     
-    current_class.read_inheritable_attribute(:transition_table).each do |event_name, event|
+    events.each do |event_name, event|
+      if !event.respond_to?('each')
+        def event.each(&blk)
+          @transitions.each { |t| blk.call(t) }
+        end
+      end
       event.each do |transition|
         @graph.add_edge [
           'event', 
