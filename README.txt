@@ -103,7 +103,10 @@ also use Omnigraffle (on Mac OS X).
 
 = RailRoad as a rake task
 
-See tasks/diagrams.rake
+See lib/railroad/tasks/diagrams.rake
+
+You can also add the following line in the Rakefile in your project:
+require 'railroad/tasks/diagrams' if RAILS_ENV == 'development'
 
 = Requirements
 
@@ -137,3 +140,4 @@ Factory Design Labs http://github.com/factorylabs
 Mike Mondragon      http://github.com/monde
 Tero Tilus          http://github.com/terotil
 Bruno Michel        http://github.com/nono
+

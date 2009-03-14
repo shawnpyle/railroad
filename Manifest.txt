@@ -13,5 +13,6 @@ lib/railroad/controllers_diagram.rb
 lib/railroad/diagram_graph.rb
 lib/railroad/models_diagram.rb
 lib/railroad/options_struct.rb
+lib/railroad/tasks/diagrams.rake
+lib/railroad/tasks/diagrams.rb
 railroad.gemspec
-tasks/diagrams.rake
