@@ -103,10 +103,19 @@ also use Omnigraffle (on Mac OS X).
 
 = RailRoad as a rake task
 
-See lib/railroad/tasks/diagrams.rake
+This version of railroad also works as a plugin.
 
-You can also add the following line in the Rakefile in your project:
-require 'railroad/tasks/diagrams' if RAILS_ENV == 'development'
+    script/plugin install git://github.com/bryanlarsen/railroad.git
+   
+`rake doc:diagrams` produces 'doc/diagrams/models.svg',
+'doc/diagrams/controllers.svg' and , 'doc/diagrams/states.svg'.
+
+Update 'lib/railroad/tasks/diagrams.rake' to change the options for
+your diagrams.
+ 
+Running RailRoad as a rake task ensures that all of your plugins are
+loaded correctly, and may work when railroad from the command line
+fails.
 
 = Requirements
 
