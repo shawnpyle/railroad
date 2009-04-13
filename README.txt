@@ -117,6 +117,11 @@ Running RailRoad as a rake task ensures that all of your plugins are
 loaded correctly, and may work when railroad from the command line
 fails.
 
+These rake tasks are also available if you install railroad as a gem.
+In that case, add to your top-level Rakefile:
+
+    require 'railroad/tasks/diagrams'
+
 = Requirements
 
 RailRoad has been tested with Ruby 1.8.5 and Rails 1.1.6 to 1.2.3
