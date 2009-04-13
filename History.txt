@@ -1,8 +1,22 @@
+=== 0.7.7 / 2009-04-12 (Bryan Larsen)
+
+* rake task now dependent on :environment so all plugins load
+  correctly
+
+=== 0.7.5 / 2009-03-13 (Bruno Michel)
+
+* Use autoload insted of require for models to avoid loading them
+  twice
+
+=== 0.7.3 / 2009-02-18 (David Dollar)
+
+* add the ability to hide methods that begin with an underscore
+
 === 0.7.1 / 2009-02-13
 
 * Housekeeping
 
-=== 0.7.0 / 2009-02-13
+=== 0.7.0 / 2009-02-13 (Tero Tilus)
 
 * 2 major enhancements
 
