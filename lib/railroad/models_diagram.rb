@@ -143,7 +143,7 @@ class ModelsDiagram < AppDiagram
         # associations -= current_class.superclass.reflect_on_all_associations
       end
       associations.each do |a|
-        process_association current_class.name, a
+        process_association current_class, a
       end
     elsif @options.all && (current_class.is_a? Class)
       # Not ActiveRecord::Base model
@@ -164,8 +164,17 @@ class ModelsDiagram < AppDiagram
     STDERR.print "\tDone #{current_class}\n" if @options.verbose
   end # process_class
 
+  def determine_minimum_association(klass, column)
+    if klass.respond_to?(:reflect_on_validations_for)
+      return 1 if klass.reflect_on_validations_for(column).detect { |r|
+        [:validates_presence_of, :validates_existence_of, :validates_length_of, :validates_associated].include?(r.macro)
+      }
+    end
+    return 0
+  end
+
   # Process a model association
-  def process_association(class_name, assoc)
+  def process_association(klass, assoc)
     begin
     STDERR.print "\t\tProcessing model association #{assoc.name.to_s} ..." if @options.verbose
 
@@ -184,17 +193,21 @@ class ModelsDiagram < AppDiagram
     end
 #    STDERR.print "#{assoc_name}\n"
     if assoc.macro.to_s == 'has_one'
-      assoc_type = 'one-one'
+      from_max='1'
+      to_max='1'
     elsif assoc.macro.to_s == 'has_many' && (! assoc.options[:through])
-      assoc_type = 'one-many'
+      from_max='1'
+      to_max='n'
     else # habtm or has_many, :through
-      return if @habtm.include? [assoc.class_name, class_name, assoc_name]
-      assoc_type = 'many-many'
-      @habtm << [class_name, assoc.class_name, assoc_name]
+      return if @habtm.include? [assoc.class_name, klass.name, assoc_name]
+      from_max='n'
+      to_max='n'
+      @habtm << [klass.name, assoc.class_name, assoc_name]
     end
-    # from patch #12384
-    # @graph.add_edge [assoc_type, class_name, assoc.class_name, assoc_name]
-    @graph.add_edge [assoc_type, class_name, assoc_class_name, assoc_name]
+    to_min = determine_minimum_association(klass, assoc.name)
+      # have to guess at name for association in other direction
+    from_min = determine_minimum_association(assoc.klass, assoc.primary_key_name.gsub(/_id$/, ""))
+    @graph.add_edge ["n-n", klass.name, assoc_class_name, assoc_name, "#{from_min}-#{from_max}", "#{to_min}-#{to_max}"]
     ensure
       STDERR.print " done.\n" if @options.verbose
     end

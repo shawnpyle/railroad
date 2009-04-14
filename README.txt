@@ -101,6 +101,17 @@ Note: For viewing and editing SVG there is an excellent opensource tool
 called Inkscape (similar to Adobe Illustrator. For DOT processing you can
 also use Omnigraffle (on Mac OS X).
 
+= validation_reflection
+
+If you have the
+[validation_reflection](http://github.com/redinger/validation_reflection/tree/master)
+plugin installed, your model ERD diagrams will properly distinguish
+between required and optional associations.
+
+Required associations are those that contain a
+*validates_presence_of*, *validates_existence_of*,
+*validates_associated*, or *validates_length_of* validation.
+
 = RailRoad as a rake task
 
 This version of railroad also works as a plugin.

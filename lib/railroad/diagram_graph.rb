@@ -35,8 +35,8 @@ class DiagramGraph
   # Generate DOT graph
   def to_dot
     return dot_header +
-           @nodes.map{|n| dot_node n[0], n[1], n[2]}.join +
-           @edges.map{|e| dot_edge e[0], e[1], e[2], e[3]}.join +
+           @nodes.map{|n| dot_node *n}.join +
+           @edges.map{|e| dot_edge *e}.join +
            dot_footer
   end
   
@@ -104,10 +104,20 @@ class DiagramGraph
     return "\t#{quote(name)} [#{options}]\n"
   end # dot_node
 
+  @@arrow_types = {
+    '0-n' => 'crowodot',
+    '1-n' => 'crowtee',
+    '1-1' => 'teetee',
+    '0-1' => 'teeodot',
+    '' => 'dot'
+  }
+
   # Build a DOT graph edge
-  def dot_edge(type, from, to, name = '')
-    options =  name != '' ? "label=\"#{name}\", " : ''
+  def dot_edge(type, from, to, name = '', from_type = '', to_type = '')
+    options = (name.blank? ? "" : "label=#{name}, ")
     case type
+      when 'n-n'
+           options += "arrowtail=#{@@arrow_types[from_type]}, arrowhead=#{@@arrow_types[to_type]}, dir=both"
       when 'one-one'
            #options += 'taillabel="1"'
            options += 'arrowtail=odot, arrowhead=dot, dir=both'
