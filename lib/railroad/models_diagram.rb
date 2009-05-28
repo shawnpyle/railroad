@@ -206,7 +206,7 @@ class ModelsDiagram < AppDiagram
     end
     to_min = determine_minimum_association(klass, assoc.name)
       # have to guess at name for association in other direction
-    from_min = determine_minimum_association(assoc.klass, assoc.primary_key_name.gsub(/_id$/, ""))
+    from_min = determine_minimum_association(assoc.klass, assoc.primary_key_name.to_s.gsub(/_id$/, ""))
     @graph.add_edge ["n-n", klass.name, assoc_class_name, assoc_name, "#{from_min}-#{from_max}", "#{to_min}-#{to_max}"]
     ensure
       STDERR.print " done.\n" if @options.verbose
