@@ -54,6 +54,7 @@ Other options:
     -M, --models                     Generate models diagram
     -C, --controllers                Generate controllers diagram
     -A, --aasm                       Generate "acts as state machine" diagram
+    -L, --lifecycle                  Generate Hobo::Lifecycle state machine diagram
 
 
 == Examples
@@ -119,7 +120,8 @@ This version of railroad also works as a plugin.
     script/plugin install git://github.com/bryanlarsen/railroad.git
    
 `rake doc:diagrams` produces 'doc/diagrams/models.svg',
-'doc/diagrams/controllers.svg' and , 'doc/diagrams/states.svg'.
+'doc/diagrams/controllers.svg', and 'doc/diagrams/states.svg' and 
+'doc/diagrams/lifecycle.svg'
 
 Update 'lib/railroad/tasks/diagrams.rake' to change the options for
 your diagrams.
