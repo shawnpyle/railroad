@@ -2,6 +2,7 @@
 
 require 'rubygems'
 require 'hoe'
+$:.unshift File.join(File.dirname(__FILE__), 'lib')
 require './lib/railroad.rb'
 
 Hoe.new('railroad', APP_VERSION.join('.')) do |p|
