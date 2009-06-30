@@ -31,6 +31,8 @@ elsif options.command == 'controllers'
   diagram = ControllersDiagram.new options
 elsif options.command == 'aasm'
   diagram = AasmDiagram.new options
+elsif options.command == 'lifecycle'
+  diagram = LifecycleDiagram.new options
 else
   STDERR.print "Error: You must supply a command\n" +
                "  (try #{APP_NAME} -h)\n\n"

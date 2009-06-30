@@ -153,6 +153,14 @@ class OptionsStruct < OpenStruct
           self.command = 'aasm'
         end
       end
+      opts.on("-L", "--lifecycle", "Generate \"Hobo::Lifecycle\" diagram") do |c|
+        if self.command == 'controllers'
+          STDERR.print "Error: Can only generate one diagram type\n\n"
+          exit 1
+        else
+          self.command = 'lifecycle'
+        end
+      end      
       opts.separator ""
       opts.separator "For bug reporting and additional information, please see:"
       opts.separator "http://railroad.rubyforge.org/"

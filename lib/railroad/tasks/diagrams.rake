@@ -17,10 +17,15 @@ namespace :doc do
     task :states do
       doc_diagrams_generate(AasmDiagram, 'states', '-A', 'dot')
     end
-  end
+
+    desc "Draw Hobo::Lifecycle diagrams"
+    task :lifecycle do
+      doc_diagrams_generate(LifecycleDiagram, 'lifecycle', '-L', 'dot')
+    end
+end
 
   desc "Draw controllers, models & states diagrams"
-  task :diagrams => %w(diagrams:models diagrams:controllers diagrams:states)
+  task :diagrams => %w(diagrams:models diagrams:controllers diagrams:states diagrams:lifecycle)
 end
 
 def doc_diagrams_generate(generator, type, options, dot_cmd)
