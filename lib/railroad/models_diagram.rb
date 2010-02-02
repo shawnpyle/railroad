@@ -79,12 +79,10 @@ class ModelsDiagram < AppDiagram
   # Check for namespaced models in subdirectories as well as models
   # in subdirectories without namespacing.
   def get_model_class(file)
-    model = file.sub(/^.*app\/models\//, '').sub(/\.rb$/, '').camelize
-    parts = model.split('::')
     begin
-      parts.inject(Object) {|klass, part| klass.const_get(part) }
-    rescue LoadError
-      Object.const_get(parts.last)
+    model = file.sub(/^.*app\/models\//, '').sub(/\.rb$/, '').camelize
+    rescue
+      STDERR.print "Can't find class #{model}"
     end
   end
 
@@ -107,7 +105,12 @@ class ModelsDiagram < AppDiagram
 
         # Collect model's content columns
 
+        begin
         content_columns = current_class.content_columns
+        rescue
+          STDERR.print "Table #{current_class.table_name} not exist"
+          return
+        end
 
         if @options.hide_magic
           magic_fields = [
@@ -143,7 +146,10 @@ class ModelsDiagram < AppDiagram
         # associations -= current_class.superclass.reflect_on_all_associations
       end
       associations.each do |a|
+        begin
         process_association current_class, a
+        rescue
+        end
       end
     elsif @options.all && (current_class.is_a? Class)
       # Not ActiveRecord::Base model
