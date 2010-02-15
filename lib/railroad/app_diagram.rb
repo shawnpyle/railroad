@@ -42,6 +42,9 @@ class AppDiagram
     if @options.xmi 
         STDERR.print "Generating XMI diagram\n" if @options.verbose
     	@graph.to_xmi
+    elsif @options.yuml 
+        STDERR.print "Generating yuml diagram\n" if @options.verbose
+    	@graph.to_yuml
     else
         STDERR.print "Generating DOT graph\n" if @options.verbose
         @graph.to_dot 

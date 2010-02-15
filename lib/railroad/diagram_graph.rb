@@ -45,8 +45,54 @@ class DiagramGraph
      STDERR.print "Sorry. XMI output not yet implemented.\n\n"
      return ""
   end
+def to_yuml
+      classes={}
+      parts=[]
+      parts<<@nodes.collect{|node| 
+        type=node[0]
+        name=node[1]
+        attributes=node[2]
+        case type
+          when 'model'
+               "[#{name}|#{attributes.join(';')}|#{methods.join(';')}]"
+          else
+             "[#{name}]"  
+        end
+      }
+      parts<<@edges.collect{|edge|
+        type=edge[0]
+        from=edge[1]
+        to=edge[2]
+        name=edge[3]
+        from_edg=edge[4]
+        to_edg=edge[5]
+        association=case type
+          when 'is-a'
+               "^-"
+          else 
+            yuml_association(from_edg,to_edg)
+          #when 'event'
+          #     options += "fontsize=10"
+        end
+        "[#{from}]#{association}[#{to}]"
+      }
+      parts.join(",")
+  end
+  
 
   private
+
+  def yuml_association(from_edg,to_edg)
+    if from_edg == '0-n' && to_edg == "0-n"
+      "*-*"
+    elsif from_edg == "0-1" && to_edg == "0-n"
+      "1-*"
+    elsif from_edg == "0-1" && to_edg == "0-1"
+      "1-1"
+      else 
+        raise "Can't find association from #{from_edg} to #{to_edg}"
+    end
+  end
 
   # Build DOT diagram header
   def dot_header

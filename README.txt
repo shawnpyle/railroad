@@ -27,6 +27,9 @@ Common options:
     -o, --output FILE                Write diagram to file FILE
     -v, --verbose                    Enable verbose output
                                        (produce messages to STDOUT)
+    -u, --yuml                       Produce yuml instead of DOT
+                                       (for http://yuml.me)
+
 
 Models diagram options:
     -a, --all                        Include all models
@@ -65,6 +68,8 @@ Other options:
       Models diagram with all classes showing inheritance relations
     railroad -M | dot -Tsvg > models.svg
       Model diagram in SVG format
+    railroad -M -u 
+      Print yuml format diagram, used by http://yuml.me
     railroad -C | neato -Tpng > controllers.png
       Controller diagram in PNG format
     railroad -h

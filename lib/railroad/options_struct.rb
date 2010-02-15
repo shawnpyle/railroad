@@ -72,6 +72,10 @@ class OptionsStruct < OpenStruct
               "  (for UML tools)") do |x|
         self.xmi = x
       end
+      opts.on("-u", "--yuml", "Produce yuml instead of DOT",
+              "  (for http://yuml.me)") do |x|
+        self.yuml = x
+      end
       opts.separator ""
       opts.separator "Models diagram options:"
       opts.on("-a", "--all", "Include all models",
