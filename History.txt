@@ -1,3 +1,8 @@
+=== 0.7.8 / 2010-03-15 (Allen Wei)
+
+* yuml output format support
+* exclude class as well when exclude file
+
 === 0.7.7 / 2009-04-12 (Bryan Larsen)
 
 * rake task now dependent on :environment so all plugins load
