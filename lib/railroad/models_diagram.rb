@@ -63,8 +63,10 @@ class ModelsDiagram < AppDiagram
       files = Dir.glob("app/models/**/*.rb")
       files += Dir.glob("vendor/plugins/**/app/models/*.rb") if @options.plugins_models
       files -= @options.exclude
-      files.each {|file| get_model_class(file) }
+      require 'ruby-debug';debugger
+      @models = files.map{|file| get_model_class(file) }
       enable_stdout
+      @models
     rescue LoadError
       enable_stdout
       print_error "model classes"
@@ -197,6 +199,7 @@ class ModelsDiagram < AppDiagram
     else
       assoc_name = assoc.name.to_s
     end
+    return unless @models.include? assoc_class_name
 #    STDERR.print "#{assoc_name}\n"
     if assoc.macro.to_s == 'has_one'
       from_max='1'
