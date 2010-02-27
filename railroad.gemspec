@@ -3,11 +3,11 @@ Gem::Specification.new do |s|
   s.version = "0.7.8"
 
   s.required_rubygems_version = Gem::Requirement.new(">= 0") if s.respond_to? :required_rubygems_version=
-  s.authors = ["Javier Smaldone", "Thomas Ritz", "Tien Dung", "Factory Design Labs", "Mike Mondragon", "Tero Tilus", "David Dollar", "Bruno Michel","Allen Wei"]
+  s.authors = ["Javier Smaldone", "Thomas Ritz", "Tien Dung", "Factory Design Labs", "Mike Mondragon", "Tero Tilus", "David Dollar", "Bruno Michel", "Allen Wei", "Bryan Larsen"]
   s.date = "2010-02-15"
   s.default_executable = "railroad"
   s.description = "RailRoad is a class diagrams generator for Ruby on Rails applications."
-  s.email = "digruby@gmail.com"
+  s.email = "javier@smaldone.com.ar"
   s.executables = ["railroad"]
   s.extra_rdoc_files = ["History.txt", "Manifest.txt", "README.txt"]
   s.files = ["COPYING", "ChangeLog", "History.txt", "Manifest.txt", "README.txt", "Rakefile", "bin/railroad", "init.rb", "lib/railroad.rb", "lib/railroad/aasm_diagram.rb", "lib/railroad/app_diagram.rb", "lib/railroad/controllers_diagram.rb", "lib/railroad/diagram_graph.rb", "lib/railroad/models_diagram.rb", "lib/railroad/options_struct.rb", "lib/railroad/tasks/diagrams.rb", "lib/railroad/tasks/diagrams.rake"]

@@ -63,7 +63,6 @@ class ModelsDiagram < AppDiagram
       files = Dir.glob("app/models/**/*.rb")
       files += Dir.glob("vendor/plugins/**/app/models/*.rb") if @options.plugins_models
       files -= @options.exclude
-      require 'ruby-debug';debugger
       @models = files.map{|file| get_model_class(file) }
       enable_stdout
       @models

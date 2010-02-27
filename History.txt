@@ -1,7 +1,16 @@
-=== 0.7.8 / 2010-03-15 (Allen Wei)
+=== 0.7.8 / 2010-03-15 
+
+(Allen Wei)
 
 * yuml output format support
 * exclude class as well when exclude file
+
+(Bryan Larsen)
+
+* Updated to produce true crow's foot style ERD diagrams.  Use the
+    (optional) validation_reflection plugin to determine whether
+    associations are optional or required.
+* add support for Hobo::Lifecycle state transition diagrams
 
 === 0.7.7 / 2009-04-12 (Bryan Larsen)
 
