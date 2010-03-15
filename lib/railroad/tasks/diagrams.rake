@@ -28,9 +28,9 @@ end
   task :diagrams => %w(diagrams:models diagrams:controllers diagrams:states diagrams:lifecycle)
 end
 
-def doc_diagrams_generate(generator, type, options, dot_cmd)
+def doc_diagrams_generate(generator, type, opts, dot_cmd)
   options = OptionsStruct.new
-  options.parse "-v -j -l -i #{options}".split
+  options.parse "-v -j -l -i #{opts}".split(' ')
   
   output_dir = "doc/diagrams"
 
