@@ -30,6 +30,7 @@ class OptionsStruct < OpenStruct
                      :libraries => false,
                      :root => '',
                      :transitive => false,
+                     :include_non_content => false,
                      :verbose => false,
                      :xmi => false,
                      :command => '' }
@@ -103,6 +104,9 @@ class OptionsStruct < OpenStruct
       opts.on("-t", "--transitive", "Include transitive associations",
               "(through inheritance)") do |t|
         self.transitive = t
+      end
+      opts.on("--include-non-content", "Include non-content columns (id's, et cetera)") do |i|
+        self.include_non_content = i
       end
       opts.separator ""
       opts.separator "Controllers diagram options:"

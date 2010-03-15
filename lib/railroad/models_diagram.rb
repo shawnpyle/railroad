@@ -107,7 +107,7 @@ class ModelsDiagram < AppDiagram
         # Collect model's content columns
 
         begin
-        content_columns = current_class.content_columns
+          content_columns = @options.include_non_content ? current_class.columns : current_class.content_columns
         rescue
           STDERR.print "Table #{current_class.table_name} not exist"
           return
@@ -124,15 +124,13 @@ class ModelsDiagram < AppDiagram
           "rgt", "quote", "template"
           ]
           magic_fields << current_class.table_name + "_count" if current_class.respond_to? 'table_name'
-          content_columns = current_class.content_columns.select {|c| ! magic_fields.include? c.name}
-        else
-          content_columns = current_class.content_columns
+          content_columns = content_columns.select {|c| ! magic_fields.include? c.name}
         end
 
         content_columns.each do |a|
           content_column = a.name
           content_column += ' :' + a.type.to_s unless @options.hide_types
-          content_column += ' ('+a.comment+')' if a.respond_to?(:comment) && a.comment
+          content_column += ' ('+a.comment+')' if a.respond_to?(:comment) && !a.comment.empty?
           node_attribs << content_column
         end
       end
