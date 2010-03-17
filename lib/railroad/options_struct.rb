@@ -26,6 +26,8 @@ class OptionsStruct < OpenStruct
                      :hide_protected => false,
                      :hide_private => false,
                      :hide_underscore => false,
+                     :hide_comments => false,
+                     :comment_separator => ".  ",
                      :plugins_models => false,
                      :libraries => false,
                      :root => '',
@@ -88,6 +90,12 @@ class OptionsStruct < OpenStruct
       end
       opts.on("--hide-types", "Hide attributes type") do |h|
         self.hide_types = h
+      end
+      opts.on("--hide-comments", "Hide attributes comments") do |h|
+        self.hide_comments = h
+      end
+      opts.on("--comment-separator SEP", "Only display the portion of the comment before SEP.",  "default is '.  ' (period and two spaces)") do |sep|
+        self.comment_separator = sep
       end
       opts.on("-j", "--join", "Concentrate edges") do |j|
         self.join = j

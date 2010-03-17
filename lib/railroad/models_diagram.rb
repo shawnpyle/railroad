@@ -130,7 +130,9 @@ class ModelsDiagram < AppDiagram
         content_columns.each do |a|
           content_column = a.name
           content_column += ' :' + a.type.to_s unless @options.hide_types
-          content_column += ' ('+a.comment+')' if a.respond_to?(:comment) && !a.comment.empty?
+          if !@options.hide_comments && a.respond_to?(:comment) && !a.comment.empty?
+            content_column += ' ('+a.comment.split(@options.comment_separator)[0]+')'
+          end
           node_attribs << content_column
         end
       end
