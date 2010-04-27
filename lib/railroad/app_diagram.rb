@@ -57,7 +57,7 @@ class AppDiagram
   # Prevents Rails application from writing to STDOUT
   def disable_stdout
     @old_stdout = STDOUT.dup
-    STDOUT.reopen(PLATFORM =~ /mswin/ ? "NUL" : "/dev/null")
+    STDOUT.reopen(RUBY_PLATFORM || PLATFORM =~ /mswin/ ? "NUL" : "/dev/null")
   end
 
   # Restore STDOUT  
